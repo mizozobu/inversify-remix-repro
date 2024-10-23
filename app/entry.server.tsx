@@ -1,3 +1,6 @@
+import 'reflect-metadata';
+import { Container, injectable } from 'inversify';
+
 /**
  * By default, Remix will handle generating the HTTP Response for you.
  * You are free to delete this file if you'd like to, but if you ever want it revealed again, you can run `npx remix reveal` ✨
@@ -24,6 +27,31 @@ export default function handleRequest(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   loadContext: AppLoadContext
 ) {
+  @injectable()
+  class Ninja {
+
+    public constructor(private _dagger:Dagger) {}
+
+    public throwDagger() {
+      this._dagger.throw();
+    }
+  }
+
+  @injectable()
+  class Dagger {
+
+    public throw() {
+      console.log('throw dagger');
+    }
+  }
+
+  const container = new Container();
+
+  container.bind<Ninja>(Ninja).toSelf();
+  container.bind<Dagger>(Dagger).toSelf();
+
+  container.get(Ninja).throwDagger();
+
   return isbot(request.headers.get("user-agent") || "")
     ? handleBotRequest(
         request,

@@ -8,8 +8,10 @@
     "**/.client/**/*.tsx"
   ],
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "types": ["@remix-run/node", "vite/client"],
+    "types": ["@remix-run/node", "vite/client", "reflect-metadata"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
